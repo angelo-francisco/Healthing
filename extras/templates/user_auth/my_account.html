@@ -1,0 +1,64 @@
+{% extends 'user_auth/base.html' %}
+{% load static %}
+
+{% block head %} 
+    <link rel="stylesheet" href="{% static 'css/user_auth/user_auth.css' %}">
+{% endblock %}
+
+{% block title %}Minha Conta - HealthingProject{% endblock %}
+
+{% block content %}
+
+{% include 'partials/navbar.html' %}
+
+<div class="container">
+    <br>
+    <br>
+    <div class="row">
+        <div class="col-md-8">
+            
+            <p class="p-bold">Olá, <span class="color-dark">{{ request.user.first_name }} {{ request.user.last_name }}!</span></p>
+            <p class="p-bold">Seja bem-vindo ao seu perfil.</p>
+            {% if messages %}
+                <br>
+                {% for message in messages %}
+                    <section class="alert {{message.tags}}">
+                        {{message}}
+                    </section>
+                {% endfor %}
+            {% endif %}
+            <br>
+            <strong>Primeiro nome</strong> {{ request.user.first_name }}
+            <br>
+            <strong>Sobrenome</strong> {{ request.user.last_name }}
+            <br>
+            <strong>É médico?</strong> {{ is_medico }}
+            <br>
+            <strong>Email</strong> {{ request.user.email}}
+            <br>
+            <strong>Username</strong> {{ request.user.username}}
+            <br>
+            {% if is_medico %}
+            <strong>Nome Completo</strong> {{ medico.nome_completo }}
+            <br>
+            <strong>CRM</strong> {{ medico.crm }}
+            <br> 
+            <strong>CEP</strong> {{ medico.cep }}
+            <br>
+            <strong>Morada</strong> {{ medico.bairro }}, {{ medico.rua }}
+            <br>
+            <strong>Número</strong> {{ medico.numero }}
+            <br>
+            <strong>Especialidade</strong> {{ medico.area }}
+            <br>
+            <strong>Descrição</strong> {{ medico.descricao }}
+            <br>
+            <strong>Valor da Consulta</strong> {{ medico.valor_consulta }} 
+            {% endif %}
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
+</div>
+
+{% endblock %}

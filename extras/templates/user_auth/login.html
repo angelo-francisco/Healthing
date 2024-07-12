@@ -1,0 +1,61 @@
+{% extends 'user_auth/base.html' %}
+
+{% load static %}
+
+{% block title %}Login - Healthing Project{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/user_auth/user_auth.css' %}">
+{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md d-flex justify-content-center">
+                <div class="cont-cadastro">
+                    <br>
+                    <br>
+                    <section class="cont-logo">
+                        <img class="logo" src="{% static 'imgs/logo.png' %}">
+                        <label class="text-logo">HEALING</label>
+                    </section>
+                    <hr>
+                    
+                    <form action="{% url 'auth_login' %}" method="POST">
+                        {% csrf_token %}
+                        <h2 class="fonte-destaque1">Logar</h2>
+                        {% if messages %}
+                            <br>
+                            {% for message in messages %}
+                                <section class="alert {{message.tags}}">
+                                    {{message}}
+                                </section>
+                            {% endfor %}
+                        {% endif %}
+                        <br>
+                        <label for="">Username</label>
+                        <input type="text" name="username" id="" class="form-control" placeholder="Username ...">
+                        <br>
+                        
+                       
+                        <label for="">Senha</label>
+                        <input type="password" name="senha" class="form-control" placeholder="Digite sua senha ...">
+                        <br>
+
+                        <input type="submit" value="Logar" class="btn btn-success btn-dark-color">
+                        <a href="{% url 'auth_signup' %}" class="btn btn-dark-color-outline">Não possuo uma conta</a>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md bg-main d-flex justify-content-center align-items-center">
+                <img src="{% static 'imgs/ilustracao.png' %}" alt="">
+
+
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+

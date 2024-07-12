@@ -1,0 +1,56 @@
+{% extends "user_auth/base.html" %}
+{% load static %}
+
+{% block title %} Cadastrar horários - Healthing Project{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'css/medicine/horario.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_auth/user_auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/medicine/auth_doctor.css' %}">
+{% endblock %}
+
+
+{% block content %}
+    {% include "partials/navbar.html" %}    
+
+    <div class="container">
+
+        <br><br>
+
+        <div class="row">
+            <div class="col-md-8">
+                <img src="{{ medico.foto_perfil.url }}"  class="foto-perfil" alt="">
+                <label style="margin-left: 30px; font-size: 25px" class="p-bold">Olá, <span class="color-dark">{{request.user.first_name}} {{ request.user.last_name }}</span>!</label>
+                
+                <br>
+                {% if messages %}
+                    <br>
+                    {% for message in messages %}
+                        <section class="alert {{message.tags}}">
+                            {{message}}
+                        </section>
+                    {% endfor %}
+                {% endif %}
+                <br>
+                <p style="font-size: 25px" class="p-bold">Abrir horários para consultas</p>
+                <hr>
+                <form action="{% url 'horarios' %}" method="POST">
+                    {% csrf_token %}
+                    <label for="">Escolher data:</label>
+                    <input type="datetime-local" name="data" class="form-control shadow-main-color">
+                    <br>
+                    <input type="submit" value="Salvar" class="btn btn-success btn-dark-color">
+                </form>
+            </div>
+            <div class="col-md-4">
+                <p style="font-size: 25px" class="p-bold">Seus horários:</p>
+                <ul class="list-group">
+                    {% for horario in horarios %}
+                    <li>{{ horario.data }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

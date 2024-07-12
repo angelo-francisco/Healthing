@@ -1,0 +1,87 @@
+{% extends "user_auth/base.html" %}
+{% load static %}
+
+{% block title %}Minhas consultas - Healthing Project {% endblock %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="{% static 'css/medicine/horario.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_auth/user_auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/medicine/auth_doctor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patient/patient_home.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+{% endblock %}
+
+{% block content %}
+    {% include "partials/navbar.html" %}
+
+    <br><br>
+    <div class="container">
+        {% if consultas.status == 'C' %}
+            <div class="alert alert-danger" role="alert">
+                Consulta cancelada
+            </div>
+        {% elif consultas.status == 'F' %}
+            <div class="alert alert-success" role="alert">
+                Consulta Finalizada
+            </div>
+        {% elif consultas.status == 'I' %}
+            <div class="alert alert-primary" role="alert">
+                Consulta inicializada, acesse o link imediatamente!
+            </div>
+        {% endif %}
+        <div class="row">
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="col-md-3"><img src="{{medico.foto_perfil.url}}" class="foto-perfil-card-lg" alt=""></div>
+                    <div class="col-md">
+                        <p style="font-size: 20px" class="p-bold">Dr(a). {{medico.nome_completo}} <i class="bi bi-patch-check-fill icon-main"></i></p>
+                        <p>{{medico.descricao}}</p>
+                        <p class="p-bold">{{consultas.horario.data}}</p>
+                    </div>
+                </div> 
+                <hr>
+                <br>
+                <div class="row">
+                    <div class="col-md">
+                        <p><i class="{% if consultas.status == 'A' %}color-dark{% endif %} bi bi-check-circle-fill"></i> Consulta agendada</p>
+                    </div>
+                    <div class="col-md">
+                        <p><i class="{% if consultas.status == 'F' %}color-dark{% endif %} bi bi-check-circle-fill"></i> Consulta realizada</p>
+                    </div>
+                    <div class="col-md">
+                        <p><i class="{% if consultas.status == 'I' %}color-dark{% endif %} bi bi-check-circle-fill"></i> Consulta Iniciada</p>
+                    </div>
+                </div>
+                <hr>
+                <h3 class="p-bold">Detalhes da consulta</h3>
+                <p style="font-size:20px"><i class="bi bi-calendar3 color-dark"></i>&nbsp {{consultas.horario.data}}</p>
+                <p style="font-size:20px"><i class="bi bi-tag-fill color-dark"></i></i>&nbsp R$ {{medico.valor_consulta}}</p>
+                <a style="cursor: auto;" class="btn btn-dark-color-outline btn-lg" href="https://calendar.google.com/calendar/">Adicione em seu calendário!</a>
+                <hr>
+                <h3 class="p-bold">Como acessar ?</h3>
+                <p>No horário da consulta acesse o link disponível abaixo</p>
+
+                {% if consultas.status == "I" and consultas.link %}
+                <a href="{{ consultas.link }}" class="btn btn-success btn-dark-color btn-lg" target="_blank">Acessar consulta</a>
+                {% else %}
+                <a href="{{ consultas.link }}" class="btn btn-success btn-dark-color btn-lg disabled" target="_blank">Acessar consulta</a>
+                {% endif %}
+                
+                <hr>
+                <h3 class="p-bold">Meus documentos</h3>
+                <br>
+                {% for doc in documentos %}
+                    <a href="{{doc.documento.url}}" class="link documentos"><i class="bi bi-file-arrow-down"></i> {{doc.titulo}} - {{doc.consulta.horario.data.year}}</a>
+                {% endfor %}
+                
+                <br>
+                <br>
+            </div>
+            <div class="col-md"></div>
+        </div>
+        
+    </div>
+
+{% endblock %}

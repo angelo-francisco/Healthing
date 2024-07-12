@@ -1,0 +1,64 @@
+{% extends "user_auth/base.html" %}
+{% load static %}
+
+{% block title %} Minhas consultas - Healthing Projects {% endblock %}
+
+{% block head %}
+
+    <link rel="stylesheet" href="{% static 'css/medicine/horario.css' %}">
+    <link rel="stylesheet" href="{% static 'css/user_auth/user_auth.css' %}">
+    <link rel="stylesheet" href="{% static 'css/medicine/auth_doctor.css' %}">
+    <link rel="stylesheet" href="{% static 'css/patient/patient_home.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+{% endblock %}
+
+{% block content %}
+    {% include "partials/navbar.html" %}
+
+    <div class="container">
+        <br>
+        <h2><span class="color-dark">Suas consultas</span></h2>
+
+        <div class="row">
+
+            <div class="col-md">
+                <input type="text" name="especialidades" id="" class="form-control shadow-main-color" placeholder="Especialidades médias">
+            </div>
+            <div class="col-md">
+                <input type="date" name="data" id="" class="form-control shadow-main-color" placeholder="Data da consulta">
+
+            </div>
+            <div class="col-md">
+                <input type="submit" value="Filtrar" class="btn btn-dark-color-outline">
+            </div>
+        </div>
+
+        <br>
+
+        <div class="list-minhas-consultas">
+            <table class="table">
+                <thead>
+                  <tr>
+                    <th scope="col">Médico</th>
+                    <th scope="col">Status</th>
+                    <th scope="col">Data</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    {% for consulta in consultas  %}
+                        <tr>
+                            <td><a href="{% url 'ver_consulta' consulta.id %}">Dr(a). {{ consulta.horario.user.first_name }} {{ consulta.horario.user.last_name }}</a></td>
+                            <td>{{ consulta.status }}</td>
+                            <td>{{ consulta.horario.data }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+              </table>
+
+        </div>
+
+
+    </div>
+
+{% endblock %}
