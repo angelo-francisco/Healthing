@@ -8,7 +8,7 @@ import datetime as dt
 from patient.models import Consulta, Documento
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def auth_doctor(request):
 
     if is_medico(request.user):
@@ -67,7 +67,7 @@ def auth_doctor(request):
             return redirect(reverse("horarios"))
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def horarios(request):
     if request.method == "GET":
         medico = MedicoData.objects.filter(user=request.user)
@@ -109,7 +109,7 @@ def horarios(request):
             return redirect(reverse("horarios"))
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def medico_consultas(request):
     if not is_medico(request.user):
         messages.add_message(
@@ -136,7 +136,7 @@ def medico_consultas(request):
     )
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def ver_consultas(request, id_consulta):
     if not is_medico(request.user):
         messages.add_message(request, constants.WARNING, "Você não é médico!")
@@ -171,7 +171,7 @@ def ver_consultas(request, id_consulta):
         return redirect(f"/medicine/ver_consultas/{id_consulta}")
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def terminar_consulta(request, id_consulta):
     consulta = Consulta.objects.get(id=id_consulta)
 
@@ -189,7 +189,7 @@ def terminar_consulta(request, id_consulta):
     return redirect(f"/medicine/ver_consultas/{id_consulta}")
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def add_documento(request, id_consulta):
     if not is_medico(request.user):
         messages.add_message(

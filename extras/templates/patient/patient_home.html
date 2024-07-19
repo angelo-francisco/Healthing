@@ -29,12 +29,8 @@
 
                 <div class="especialidades">
                     {% for area in areas %}
-                    <input type="checkbox" name="especialidades" value="{{ area.id}}">
-                    <span class="badge bg-secondary">
-
-                        {{ area.area }}
-                    
-                    </span>
+                        <input type="checkbox" name="especialidades" value="{{ area.id}}">
+                        <span class="badge bg-secondary">{{ area.area }}</span>
                     {% endfor %}
 
                 </div>
@@ -43,7 +39,7 @@
             </form>
             <hr>
 
-            <div class="list-medicos">
+            <div class="list-medicos" >
                {% for medico in medicos %}
                 <div class="card-medicos shadow-main-color">
                     <div class="row">

@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.messages import constants
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def patient_home(request):
     medicos = MedicoData.objects.all()
     areas = MedicineArea.objects.all()
@@ -35,7 +35,7 @@ def patient_home(request):
         )
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def escolher_horario(request, id_medico):
     if request.method == "GET":
         medico = MedicoData.objects.get(id=id_medico)
@@ -60,7 +60,7 @@ def escolher_horario(request, id_medico):
         return redirect(reverse("escolher_horario"))
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def agendar_consulta(request, id_consulta):
     horario = Horarios.objects.get(id=id_consulta)
 
@@ -77,7 +77,7 @@ def agendar_consulta(request, id_consulta):
     return redirect(reverse("patient_consultas"))
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def patient_consultas(request):
     if request.method == "GET":
         consultas = Consulta.objects.filter(patient=request.user).filter(
@@ -94,7 +94,7 @@ def patient_consultas(request):
         return redirect(reverse("patient_consultas"))
 
 
-@login_required(login_url="/auth/login/")
+@login_required()
 def ver_consultas(request, id_consulta):
     if request.method == "GET":
         consultas = Consulta.objects.get(id=id_consulta)

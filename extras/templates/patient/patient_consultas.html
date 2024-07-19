@@ -46,13 +46,21 @@
                   </tr>
                 </thead>
                 <tbody>
-                    {% for consulta in consultas  %}
+                    {% if consultas %}
+                        {% for consulta in consultas  %}
+                            <tr>
+                                <td><a href="{% url 'ver_consulta' consulta.id %}">Dr(a). {{ consulta.horario.user.first_name }} {{ consulta.horario.user.last_name }}</a></td>
+                                <td>{{ consulta.status }}</td>
+                                <td>{{ consulta.horario.data }}</td>
+                            </tr>
+                        {% endfor %}
+                    {% else %}
                         <tr>
-                            <td><a href="{% url 'ver_consulta' consulta.id %}">Dr(a). {{ consulta.horario.user.first_name }} {{ consulta.horario.user.last_name }}</a></td>
-                            <td>{{ consulta.status }}</td>
-                            <td>{{ consulta.horario.data }}</td>
+                            <td>-</td>
+                            <td>-</td>
+                            <td>-</td>
                         </tr>
-                    {% endfor %}
+                    {% endif %}
                 </tbody>
               </table>
 
