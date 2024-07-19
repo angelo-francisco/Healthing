@@ -3,62 +3,98 @@
 
 {% block head %} 
     <link rel="stylesheet" href="{% static 'css/user_auth/user_auth.css' %}">
+
+    <style>
+        body {
+            min-height: 100vh;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex: 1;
+        }
+        .card {
+            margin-top: 30px;
+            padding: 10px;
+        }
+    </style>
 {% endblock %}
 
 {% block title %}Minha Conta - HealthingProject{% endblock %}
 
 {% block content %}
 
-{% include 'partials/navbar.html' %}
+    {% include 'partials/navbar.html' %}
+    <main>
 
-<div class="container">
-    <br>
-    <br>
-    <div class="row">
-        <div class="col-md-8">
-            
-            <p class="p-bold">Olá, <span class="color-dark">{{ request.user.first_name }} {{ request.user.last_name }}!</span></p>
-            <p class="p-bold">Seja bem-vindo ao seu perfil.</p>
-            {% if messages %}
-                <br>
-                {% for message in messages %}
-                    <section class="alert {{message.tags}}">
-                        {{message}}
-                    </section>
-                {% endfor %}
-            {% endif %}
-            <br>
-            <strong>Primeiro nome</strong> {{ request.user.first_name }}
-            <br>
-            <strong>Sobrenome</strong> {{ request.user.last_name }}
-            <br>
-            <strong>É médico?</strong> {{ is_medico }}
-            <br>
-            <strong>Email</strong> {{ request.user.email}}
-            <br>
-            <strong>Username</strong> {{ request.user.username}}
-            <br>
-            {% if is_medico %}
-            <strong>Nome Completo</strong> {{ medico.nome_completo }}
-            <br>
-            <strong>CRM</strong> {{ medico.crm }}
-            <br> 
-            <strong>CEP</strong> {{ medico.cep }}
-            <br>
-            <strong>Morada</strong> {{ medico.bairro }}, {{ medico.rua }}
-            <br>
-            <strong>Número</strong> {{ medico.numero }}
-            <br>
-            <strong>Especialidade</strong> {{ medico.area }}
-            <br>
-            <strong>Descrição</strong> {{ medico.descricao }}
-            <br>
-            <strong>Valor da Consulta</strong> {{ medico.valor_consulta }} 
-            {% endif %}
-        </div>
-        <div class="col-md-4"></div>
+        <div class="card" style="width: 25  rem;height: auto;">
+            <form action="">
+                <div class="foto" style="text-align: center;">
+                    <div style="position: relative; display: inline-block;">
+                        <img src="{% static 'imgs/user.jpg' %}" alt="" style="width: 200px; height: 200px; border-radius: 50%;">
+                        <p>Olá, <span style="font-weight: 700;color: #00CCBE;">{{ request.user.username }}</span>!</p>
+                    </div>
+                </div>
+                <small style="color: rgba(59, 57, 57, 0.803);">Altere os seus dados, e a seguir salve-os.</small>
+            <div class="info">
+                <div style="display: flex;flex-direction: row;gap: 5px;">
+                    <div>
+                        <label for="" style="margin-top: 8px;">Primeiro Nome</label>
+                        <br>
+                        <input type="text" class="form-control" placeholder="{{ request.user.first_name }}" name="first_name">
+                    </div>
+                    <div>
+                        <label for="" style="margin-top: 8px;">Último nome</label>
+                        <br>
+                        <input type="text" placeholder="{{ request.user.last_name }}" class="form-control" name="last_name">
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: row;gap: 5px;">
+                    <div>
+                        <label for="" style="margin-top: 8px;">Email</label>
+                        <br>
+                        <input type="text" class="form-control" placeholder="{{ request.user.email }}" name="email">
+                    </div>
+                    <div>
+                        <label for="" style="margin-top: 8px;">Password</label>
+                        <br>
+                        <input type="password" placeholder="**********" class="form-control" name="password" >
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: row; gap: 5px; justify-content: space-around;">
+                    <div>
+                        <label for="" style="margin-top: 8px;">É médico?</label>
+                    </div>
+                    <div>
+                        <label for="" style="margin-top: 8px;">Joined</label>
+                    </div>
+                    <div>
+                        <label for="" style="margin-top: 8px;">Dados Médico</label>
+                    </div>
+                </div>
+                <div style="display: flex; flex-direction: row; gap: 5px; justify-content: space-around;text-align: center;">
+                    <div>
+                        <label for="" style="margin-top: 8px;text-align: center;">{{ is_medico }}</label>
+                    </div>
+                    <div>
+                        <label for="" style="margin-top: 8px;">{{ date }}</label>
+                    </div>
+                    <div>
+                        <!-- inserir link do perfil do médico -->
+                        <label for="" style="margin-top: 8px;">
+                        {% if medico %}
+                            Você não é médico
+                        {% else %}
+                            <a href="">Clique Aqui</a>
+                        {% endif %}
+                            </label>
+                    </div>
+                </div>
+            </div>
+        </form>
     </div>
-
-</div>
-
-{% endblock %}
+</main>
+    
+    {% endblock %}
+    

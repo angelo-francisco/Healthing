@@ -85,9 +85,9 @@ def auth_logout(request):
 @login_required(login_url="/auth/login")
 def my_account(request):
     if request.method == "GET":
-        medico = MedicoData.objects.filter(user=request.user).first()
+        medico = MedicoData.objects.filter(user=request.user).exists()
         return render(
             request,
             "user_auth/my_account.html",
-            {"is_medico": is_medico(request.user), "medico": medico},
+            {"is_medico": is_medico(request.user), "medico": medico, "date": request.user.date_joined.strftime("%d/%m/%Y")},
         )
