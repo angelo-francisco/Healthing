@@ -5,13 +5,13 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-config = AutoConfig(search_path=os.path.join(BASE_DIR / 'extras/secret/.env'))
+config = AutoConfig(search_path=os.path.join(BASE_DIR / "extras/secret/.env"))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -68,9 +68,9 @@ WSGI_APPLICATION = "core.wsgi.application"
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'extras/db/db.sqlite3'
+    "default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": BASE_DIR / "extras/db/db.sqlite3",
     }
 }
 
@@ -108,10 +108,8 @@ USE_TZ = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
 
-STATIC_URL = '/static/'
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR / 'extras/static'),
-)
+STATIC_URL = "/static/"
+STATICFILES_DIRS = (os.path.join(BASE_DIR / "extras/static"),)
 STATIC_ROOT = os.path.join(BASE_DIR / "static")
 
 MEDIA_URL = "/media/"
