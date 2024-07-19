@@ -1,18 +1,20 @@
 from django.contrib.messages import constants
 from pathlib import Path
+from decouple import AutoConfig
 import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+config = AutoConfig(search_path=os.path.join(BASE_DIR / 'extras/secret/.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = "django-insecure-vs*4&8q@@p^%n_7t%=b9m2^iu_h7@-n^zo!_-6_a=#jv-ayk=u"
+SECRET_KEY = config('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 
@@ -67,12 +69,8 @@ WSGI_APPLICATION = "core.wsgi.application"
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'idyJxTHcOpRQLrfzKPApGkXQBJBWcVXr',
-        'HOST': 'roundhouse.proxy.rlwy.net',
-        'PORT': '29260',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'extras/db/db.sqlite3'
     }
 }
 
