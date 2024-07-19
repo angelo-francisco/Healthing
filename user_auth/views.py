@@ -82,7 +82,7 @@ def auth_logout(request):
         return redirect(reverse("auth_doctor"))
 
 
-@login_required(login_url="/auth/login")
+@login_required()
 def my_account(request):
     if request.method == "GET":
         medico = MedicoData.objects.filter(user=request.user).exists()
