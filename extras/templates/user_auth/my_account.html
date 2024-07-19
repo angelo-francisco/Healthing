@@ -15,7 +15,7 @@
             flex: 1;
         }
         .card {
-            margin-top: 30px;
+            margin-top: 20px;
             padding: 10px;
         }
     </style>
@@ -28,38 +28,62 @@
     {% include 'partials/navbar.html' %}
     <main>
 
-        <div class="card" style="width: 25  rem;height: auto;">
-            <form action="">
+        <div class="card" style="width: 25rem;height: auto;">
+            <form action="{% url 'my_account' %}" method="POST">
+                {% csrf_token %}
                 <div class="foto" style="text-align: center;">
                     <div style="position: relative; display: inline-block;">
                         <img src="{% static 'imgs/user.jpg' %}" alt="" style="width: 200px; height: 200px; border-radius: 50%;">
                         <p>Olá, <span style="font-weight: 700;color: #00CCBE;">{{ request.user.username }}</span>!</p>
                     </div>
                 </div>
+                
+                {% if messages %}
+                    
+                    {% for message in messages %}
+                        <div class="alert alert-{{message.tags}}">
+                            {{ message}}
+                        </div>
+                    {% endfor %}
+                        
+                {% endif %}
+                    
                 <small style="color: rgba(59, 57, 57, 0.803);">Altere os seus dados, e a seguir salve-os.</small>
             <div class="info">
                 <div style="display: flex;flex-direction: row;gap: 5px;">
                     <div>
                         <label for="" style="margin-top: 8px;">Primeiro Nome</label>
                         <br>
-                        <input type="text" class="form-control" placeholder="{{ request.user.first_name }}" name="first_name">
+                        <input type="text" class="form-control" placeholder="{{ request.user.first_name }}" name="first_name" required>
                     </div>
                     <div>
                         <label for="" style="margin-top: 8px;">Último nome</label>
                         <br>
-                        <input type="text" placeholder="{{ request.user.last_name }}" class="form-control" name="last_name">
+                        <input type="text" placeholder="{{ request.user.last_name }}" class="form-control" name="last_name" required>
                     </div>
                 </div>
                 <div style="display: flex;flex-direction: row;gap: 5px;">
                     <div>
                         <label for="" style="margin-top: 8px;">Email</label>
                         <br>
-                        <input type="text" class="form-control" placeholder="{{ request.user.email }}" name="email">
+                        <input type="text" class="form-control" placeholder="{{ request.user.email }}" name="email" required>
                     </div>
                     <div>
-                        <label for="" style="margin-top: 8px;">Password</label>
+                        <label for="" style="margin-top: 8px;">Senha antiga</label>
                         <br>
-                        <input type="password" placeholder="**********" class="form-control" name="password" >
+                        <input type="password" placeholder="**********" class="form-control" name="last-password" required>
+                    </div>
+                </div>
+                <div style="display: flex;flex-direction: row;gap: 5px;">
+                    <div>
+                        <label for="" style="margin-top: 8px;">Username</label>
+                        <br>
+                        <input type="text" class="form-control" placeholder="{{ request.user.username }}" name="username" required>
+                    </div>
+                    <div>
+                        <label for="" style="margin-top: 8px;">Senha nova</label>
+                        <br>
+                        <input type="password" placeholder="**********" class="form-control" name="new-password" required>
                     </div>
                 </div>
                 <div style="display: flex; flex-direction: row; gap: 5px; justify-content: space-around;">
@@ -91,6 +115,11 @@
                             </label>
                     </div>
                 </div>
+                <div style="display: flex;flex-direction: row;gap: 3px;justify-content: center;margin-top: 8px;">
+                    <button class="btn btn-success" style="width: 50%;">Salvar</button> 
+                    <a class="btn btn-danger" style="width: 50%;" href="{% url 'auth_logout' %}">Logout</a> 
+                </div>
+
             </div>
         </form>
     </div>

@@ -6,6 +6,7 @@ from django.contrib.messages import constants
 from django.contrib import auth
 from django.contrib.auth.decorators import login_required
 from medicine.models import is_medico, MedicoData
+from django.contrib.auth.hashers import make_password, check_password
 
 
 def auth_login(request):
@@ -89,5 +90,37 @@ def my_account(request):
         return render(
             request,
             "user_auth/my_account.html",
-            {"is_medico": is_medico(request.user), "medico": medico, "date": request.user.date_joined.strftime("%d/%m/%Y")},
+            {
+                "is_medico": is_medico(request.user), 
+                "medico": medico, 
+                "date": request.user.date_joined.strftime("%d/%m/%Y")
+            },
         )
+
+    else:
+        user = User.objects.get(id=request.user.id)
+
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        email = request.POST.get('email', '')
+        last_password = request.POST.get('last-password', '')
+        new_password = request.POST.get('new-password', '')
+        username = request.POST.get('username', '')
+
+        if not check_password(last_password, request.user.password):
+            messages.warning(request, 'Senha antiga inválida!')
+            return redirect(reverse('my_account'))
+        
+        user.first_name = first_name
+        user.last_name = last_name
+        user.email = email
+        user.username = username
+        
+        if new_password:
+            user.set_password(new_password)
+        
+        user.save()
+
+        messages.success(request, 'Dados alterados com sucesso!')
+        return redirect(reverse('my_account'))
+
